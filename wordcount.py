@@ -52,6 +52,34 @@ import sys
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 
+def countWords(filename):
+    words = {}
+    with open(filename, 'r') as f:
+        for line in f:
+            newLine = line.split()
+            for word in newLine:
+                if word.lower() not in words:
+                    words[word.lower()] = 1
+                else:
+                    words[word.lower()] += 1
+    return words
+
+def print_words(filename):
+    counts = countWords(filename)
+    words = counts.keys()
+    words.sort()
+    for word in words:
+        print('"{}": {};'.format(word, counts[word]))
+
+def sort(arr):
+    return arr[1]
+
+def print_top(filename):
+    counts = countWords(filename)
+    countsArray = sorted([[word,counts[word]] for word in counts.keys()], key=sort, reverse=True)[:20]
+    for word in countsArray:
+        print('"{}": {};'.format(word[0], word[1]))
+
 
 def main():
     if len(sys.argv) != 3:
